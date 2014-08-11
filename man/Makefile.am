@@ -2,7 +2,7 @@
 libmandir = $(LIB_MAN_DIR)
 
 libman_PRE =				\
-	vncExt.man			\
+	XVncExt.man			\
 	$(Xvnc_shadows:=.man)
 
 Xvnc_shadows =				\
