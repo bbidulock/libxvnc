@@ -20,6 +20,7 @@
 #define NEED_REPLIES
 #include <X11/Xlib.h>
 #include <X11/Xlibint.h>
+#include <X11/extensions/vncproto.h>
 #include <X11/extensions/Xvnc.h>
 
 static Bool XVncExtClientCutTextNotifyWireToEvent(Display* dpy, XEvent* e,

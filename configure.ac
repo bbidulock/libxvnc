@@ -1,9 +1,9 @@
 
 AC_PREREQ([2.69])
-AC_INIT([libXvnc], [1.1.1], [https://github.com/bbidulock/libXvnc/issues], [libXvnc])
-AC_REVISION([1.1.1])
+AC_INIT([libXvnc], [1.1], [https://github.com/bbidulock/libXvnc/issues], [libXvnc])
+AC_REVISION([1.1])
 
-AC_CONFIG_SRCDIR([vncExt.c])
+AC_CONFIG_SRCDIR([src/vncExt.c])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([scripts])
@@ -16,14 +16,10 @@ AC_SUBST([DATE])
 AM_INIT_AUTOMAKE([foreign 1.14 dist-bzip2 no-dist-gzip std-options -Wall color-tests silent-rules tar-pax])
 AM_MAINTAINER_MODE
 
-# Require xorg-macros minimum of 1.12 for DocBook external references
-XORG_MACROS_VERSION(1.12)
+# Require xorg-macros 1.8 or later for MAN_SUBSTS set by XORG_MANPAGE_SECTIONS
+XORG_MACROS_VERSION(1.8)
 XORG_DEFAULT_OPTIONS
-XORG_ENABLE_DOCS
-XORG_WITH_XMLTO(0.0.22)
-XORG_WITH_FOP
-XORG_WITH_XSLTPROC
-XORG_CHECK_SGML_DOCTOOLS(1.8)
+XORG_CHECK_MALLOC_ZERO
 
 # Checks for programs.
 AC_PROG_CXX
@@ -55,12 +51,14 @@ AC_PATH_X
 # Checks for library functions.
 
 # Obtain compiler/linker options for depedencies
-PKG_CHECK_MODULES(XVNC, xproto)
+PKG_CHECK_MODULES(XVNC, x11 xext xextproto xproto [vncproto >= 1.1])
 
 # Allow checking code with lint, sparse, etc.
 XORG_WITH_LINT
 XORG_LINT_LIBRARY([Xvnc])
 
 AC_CONFIG_FILES([Makefile
+		src/Makefile
+		man/Makefile
 		xvnc.pc])
 AC_OUTPUT
